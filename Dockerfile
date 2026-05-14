@@ -25,6 +25,7 @@ COPY . .
 # 6. Build Assets (Tailwind v4)
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
+RUN php artisan storage:link
 
 # 7. Initialize Database & Permissions
 RUN mkdir -p database && touch database/database.sqlite
