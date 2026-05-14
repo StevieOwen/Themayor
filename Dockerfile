@@ -1,4 +1,4 @@
-# Use PHP 8.4 with Apache for modern dependency support
+# Use PHP 8.4 with Apache to match your dependency requirements
 FROM php:8.4-apache
 
 # Install system dependencies, Node.js, and PHP extensions
@@ -12,39 +12,41 @@ RUN apt-get update && apt-get install -y \
     curl \
     gnupg
 
-# Install Node.js 20.x (Current LTS for Vite/Tailwind builds)
+# Install Node.js 20.x (Essential for Vite/Tailwind build)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
-# Enable Apache mod_rewrite for Laravel routing
+# Enable Apache mod_rewrite for Laravel
 RUN a2enmod rewrite
 
-# Install Composer from official image
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set the working directory
+# Set working directory
 WORKDIR /var/www/html
 
-# Copy all project files into the container
+# Copy project files
 COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Install NPM dependencies and compile Tailwind/Vite assets
-# This creates the public/build/manifest.json file
+# Build Vite/Tailwind assets to resolve the 404s seen in your logs
 RUN npm install && npm run build
 
-# Create an empty SQLite database file to prevent 500 errors
+# Create SQLite file to prevent session/database errors
 RUN mkdir -p database && touch database/database.sqlite
 
-# Set correct permissions for Laravel directories
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+# Set permissions for web server
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database /var/www/html/public
 
-# Configure Apache to serve from the 'public' directory
+# Point Apache to the /public folder
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Expose port 80 for Render's web service
+# Standard Apache port
 EXPOSE 80
+
+# THE START COMMAND: This is what Render runs automatically
+CMD ["apache2-foreground"]
