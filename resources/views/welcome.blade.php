@@ -30,7 +30,7 @@
       <!-- The blue border frame around the image -->
       <div class="border-[6px] border-[#3C3489] rounded-[20px] overflow-hidden shadow-2xl transform rotate-1 md:rotate-2">
         <img 
-          src="storage/uploads/living_room3.jpeg'" 
+          src="{{ asset('storage/uploads/living_room3.jpeg') }}" 
           alt="Room Interior" 
           class="w-full h-[400px] object-cover"
         >
@@ -52,7 +52,7 @@
         {{-- This serves as placeholder now, but we'll insert a loop letter to fetch room from the DB --}}
         <div id="room-card" class="w-[95%] flex flex-col space-y-3 bg-[#fff] md:w-[30%] shadow shadow-black shadow-lg px-4 rounded-[10px] transition-transform duration-[1000ms] hover:scale-110" >
             <div class="relative overflow-hidden">
-                <img class="w-full" src="storage/uploads/room4.jpeg" alt="">
+                <img class="w-full" src="{{ asset('storage/uploads/room4.jpeg') }}" alt="">
                 <p class="absolute top-4 right-0  bg-[#3C3489] py-1 px-4 rounded-full font-semibold shadow-md text-sm md:text-base text-[#fff]" id="room-price">210$/Night</p>
             </div>
             
@@ -88,7 +88,7 @@
             {{-- appart2 --}}
         <div id="room-card" class="w-[95%] flex flex-col space-y-3 bg-[#fff] md:w-[30%] px-4 rounded-[10px] shadow shadow-black shadow-lg transition-transform duration-[1000ms] hover:scale-110" >
             <div class="relative overflow-hidden">
-                <img class="w-full" src="storage/uploads/living-room2.jpeg" alt="">
+                <img class="w-full" src="{{ asset('storage/uploads/living-room2.jpeg') }}" alt="">
                 <p class="absolute top-4 right-0  bg-[#3C3489] py-1 px-4 rounded-full font-semibold shadow-md text-sm md:text-base text-[#fff]" id="room-price">210$/Night</p>
             </div>
             
@@ -123,7 +123,7 @@
             {{-- appart3 --}}
         <div id="room-card" class="w-[95%] flex flex-col space-y-3 bg-[#fff] md:w-[30%] px-4 rounded-[10px] shadow shadow-black shadow-lg transition-transform duration-[1000ms] hover:scale-110" >
             <div class="relative overflow-hidden">
-                <img class="w-full" src="storage/uploads/living_room1.jpeg" alt="">
+                <img class="w-full" src="{{ asset('storage/uploads/living_room1.jpeg') }}" alt="">
                 <p class="absolute top-4 right-0  bg-[#3C3489] py-1 px-4 rounded-full font-semibold shadow-md text-sm md:text-base text-[#fff]" id="room-price">210$/Night</p>
             </div>
             
