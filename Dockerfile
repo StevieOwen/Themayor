@@ -26,17 +26,18 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
-# 7. CRITICAL FIX: Initialize Database & Permissions BEFORE linking
+# 7. Setup Database & Permissions
 RUN mkdir -p database && touch database/database.sqlite
 
-# Give Apache ownership of the entire project first
+# CRITICAL: Set ownership for the entire app directory first
 RUN chown -R www-data:www-data /var/www/html
 
-# Set specific write permissions for the storage/cache folders
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Ensure the web server can enter and read the storage folders
+RUN find /var/www/html/storage -type d -exec chmod 775 {} \;
+RUN find /var/www/html/storage -type f -exec chmod 664 {} \;
 
-# 8. Create the link as the www-data user to ensure access
-RUN sudo -u www-data php artisan storage:link
+# 8. Create the storage link AS the web user
+RUN su -s /bin/sh -c "php artisan storage:link" www-data
 
 EXPOSE 80
 CMD ["apache2-foreground"]
