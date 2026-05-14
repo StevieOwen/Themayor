@@ -21,3 +21,70 @@
     </header>
 
     <img src="src="{{ asset('storage/banner.jpg') }}"" alt="">
+
+
+
+    @import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer components{
+
+    .menu-link{
+        @apply transition-transform duration-[1000ms] hover:translate-1;
+    }
+}
+
+
+<tailwind class="config js">
+    /** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./resources/views/**/*.blade.php",
+    "./resources/js/**/*.js",
+    "./resources/js/**/*.ts",
+    "./resources/css/**/*.css", // Add this to track custom CSS classes
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+</tailwind>
+
+
+<vite class="conf">
+
+    import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import { bunny } from 'laravel-vite-plugin/fonts';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+            fonts: [
+                bunny('Instrument Sans', {
+                    weights: [400, 500, 600],
+                }),
+            ],
+        }),
+        tailwindcss(),
+    ],
+    server: {
+        watch: {
+            ignored: ['**/storage/framework/views/**'],
+        },
+    },
+});
+</vite>
