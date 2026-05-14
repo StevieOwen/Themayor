@@ -19,3 +19,5 @@
             </svg>
         </div>
     </header>
+
+    <img src="src="{{ asset('storage/banner.jpg') }}"" alt="">
