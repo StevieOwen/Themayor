@@ -18,9 +18,10 @@
         <!-- 2. Navigation: Hidden on mobile, Flex item on desktop -->
         <nav id="navbar" class="hidden md:block">
             <ul class="flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-6 md:space-y-0 items-center">
-                <li class="menu-link"><a href="">Chambres</a></li>
-                <li class="menu-link"><a href="">Services</a></li>
-                <li class="menu-link"><a href="">Contact</a></li>
+                <li class="menu-link"><a href="/">Home</a></li>
+                <li class="menu-link"><a href="/appartements">Appartements</a></li>
+                <li class="menu-link"><a href="/services">Services</a></li>
+                <li class="menu-link"><a href="contact">Contact</a></li>
                 <li class="menu-link">
                     <a class="bg-[#1a1a2e] py-2 px-4 text-white rounded-[10px] shadow transition-colors hover:bg-[#3C3489]" href="">
                         Réserver
